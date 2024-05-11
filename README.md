@@ -1,4 +1,3 @@
-..
 # Music Recognition and Download Application
 
 This application is built using Python and allows you to recognize music, search for lyrics, and download MP3 files.
