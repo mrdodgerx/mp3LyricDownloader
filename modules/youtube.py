@@ -2,6 +2,7 @@ from youtubesearchpython import VideosSearch
 from pytube import YouTube
 import os
 from configparser import ConfigParser
+from modules.google import send_notification
 
 config = ConfigParser()
 config.read('env.ini')
@@ -36,6 +37,8 @@ class YoutubeMp3():
                     new_file = base + '.mp3'
                     os.rename(out_file, new_file)
                     print(f'{video_title} has been successfully downloaded.')
+                    send_notification('Song is Downloaded', video_title)
+
                 else:
                     print(f'{mp3_file} already exists in the folder. Skipping download.')
             else:

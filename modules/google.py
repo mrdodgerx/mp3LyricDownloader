@@ -3,6 +3,8 @@ import urllib.parse
 from bs4 import BeautifulSoup
 import os
 from configparser import ConfigParser
+import subprocess
+
 
 config = ConfigParser()
 config.read('env.ini')
@@ -35,7 +37,6 @@ class Google():
         self.url = 'https://www.google.com/search?q='
         self.header = headers  # Headers(os="linux", headers=True).generate()
         self.song_title = None
-        self.song_url = None
         self.song_search_url = None
         self.lyrics = None
 
@@ -74,6 +75,7 @@ class Google():
             f.write(f"{self.lyrics}")
             f.close()
             print(f"{self.song_title.strip()}.txt has been successfully saved.")
+            send_notification('Lyric is Downloaded', self.song_title.strip())
         else:
             print(f"{self.song_title.strip()}.txt already exists in the folder. Skipping save.")
 
@@ -91,3 +93,8 @@ def remove_tags(soup):
 def create_folder(path):
     if not os.path.exists(path):
         os.makedirs(path)
+
+
+def send_notification(title, message):
+    command = ['notify-send', title, message]
+    subprocess.run(command)
