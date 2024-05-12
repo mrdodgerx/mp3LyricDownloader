@@ -80,7 +80,8 @@ After=network.target
 [Service]
 User=your_username
 WorkingDirectory=/path/to/your/application
-ExecStart=/usr/bin/python3 /path/to/your/application/main.py
+Environment="PATH=/path/to/your/application/venv/bin"
+ExecStart=sh /path/to/your/application/runserver.sh
 Restart=always
 RestartSec=3
 
