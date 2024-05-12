@@ -1,8 +1,20 @@
 # Music Recognition and Download Application
 
-This application is built using Python and allows you to recognize music, search for lyrics, and download MP3 files.
+This Python application allows you to recognize music, search for lyrics, and download MP3 files. It continuously records audio, recognizes the song, searches for lyrics, and downloads the MP3 file.
 
 ![Music Recognition](image.png)
+
+## Features
+- **Music Recognition**: Automatically identifies the song being played.
+- **Lyrics Search**: Searches for the lyrics of the recognized song.
+- **MP3 Download**: Downloads the MP3 file of the recognized song.
+- **Continuous Operation**: Continuously monitors for music and performs the above tasks when a song is detected.
+
+## How it Works
+1. The application continuously records audio using the microphone.
+2. When music is detected, it recognizes the song being played using SongRec.
+3. It then searches for the lyrics of the recognized song using Google.
+4. Finally, it downloads the MP3 file of the recognized song from YouTube.
 
 ## Requirements
 
