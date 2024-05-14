@@ -1,6 +1,7 @@
 from youtubesearchpython import VideosSearch
 from pytube import YouTube
 from pydub import AudioSegment
+from mutagen.easyid3 import EasyID3
 import os
 from configparser import ConfigParser
 from modules.google import send_notification
@@ -26,9 +27,8 @@ class YoutubeMp3():
     def download_mp3(self):
         if self.video_link:
             try:
-                # Create output directory if it doesn't exist
-                if not os.path.exists(MP3_OUTPUT):
-                    os.makedirs(MP3_OUTPUT)
+                # Ensure output directory exists
+                os.makedirs(MP3_OUTPUT, exist_ok=True)
 
                 # Define the MP3 path with video_title.mp3
                 video_title = self.song_title.strip()
@@ -44,14 +44,26 @@ class YoutubeMp3():
                 audio_stream = yt.streams.filter(only_audio=True).first()
 
                 if audio_stream:
-                    # Set the download path
+                    # Download the audio stream
                     video_download_path = audio_stream.download(output_path=MP3_OUTPUT)
 
                     # Convert to MP3
                     AudioSegment.from_file(video_download_path).export(mp3_path, format='mp3')
 
-                    # Optionally, remove the original file
+                    # Remove the original file
                     os.remove(video_download_path)
+
+                    # Add metadata
+                    audio = EasyID3(mp3_path)
+                    title_artist = video_title.split(' - ')
+                    if len(title_artist) > 1:
+                        audio['title'] = title_artist[1].strip()
+                        audio['artist'] = title_artist[0].strip()
+                    else:
+                        audio['title'] = video_title
+                        audio['artist'] = 'Unknown Artist'
+                    audio['genre'] = 'YouTube'
+                    audio.save()
 
                     print(f'Successfully downloaded and converted to {mp3_path}')
                     send_notification('Song is Downloaded', video_title)
