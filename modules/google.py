@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 import os
 from configparser import ConfigParser
 import subprocess
+from urllib.parse import quote
+
 
 
 config = ConfigParser()
@@ -71,7 +73,7 @@ class Google():
     def save_lyrics(self):
         create_folder(self.save_lyrics_dirs)
         if not os.path.exists(f"{self.save_lyrics_dirs}/{self.song_title.strip()}.txt"):
-            f = open(f"{self.save_lyrics_dirs}/{self.song_title.strip()}.txt", "w")
+            f = open(f"{self.save_lyrics_dirs}/{ quote(self.song_title.strip())}.txt", "w")
             f.write(f"{self.lyrics}")
             f.close()
             print(f"{self.song_title.strip()}.txt has been successfully saved.")
