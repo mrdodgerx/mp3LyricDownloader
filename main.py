@@ -35,5 +35,5 @@ if __name__ == "__main__":
             if g.lyrics:
                 g.save_lyrics()
                 y.add_lyrics(g.lyrics)
-        time.sleep(3)
+#        time.sleep(3)
 
