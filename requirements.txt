@@ -10,7 +10,9 @@ httpcore==1.0.5
 httpx==0.27.0
 idna==3.7
 numpy==1.26.4
+PyAudio==0.2.14
 pycparser==2.22
+pydub==0.25.1
 pytube==15.0.0
 requests==2.31.0
 scipy==1.13.0
