@@ -1,5 +1,4 @@
 from requests import get
-import urllib.parse
 from bs4 import BeautifulSoup
 import os
 from configparser import ConfigParser
@@ -50,7 +49,7 @@ class Google():
     
     def searchSong(self):
         lyric_div_tag = None
-        song_title_url = urllib.parse.quote(f'{self.song_title} lyrics')
+        song_title_url = f'{self.song_title} lyrics'
         self.song_search_url = f'{self.url }{song_title_url}'
         # print(self.song_search_url)
         r = get(self.song_search_url, headers=self.header)
