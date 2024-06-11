@@ -25,7 +25,7 @@ def is_ncmpcpp_running():
     """Check if ncmpcpp is running."""
     for proc in psutil.process_iter(attrs=['pid', 'name']):
         # print(proc.info['name'])
-        if proc.info['name'] == 'ncmpcpp' or proc.info['name'] == 'mopidy':
+        if proc.info['name'] == 'ncmpcpp':
             return True
     return False
 
