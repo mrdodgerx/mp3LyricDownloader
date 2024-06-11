@@ -1,7 +1,7 @@
 import sounddevice as sd
 from scipy.io.wavfile import write
 from configparser import ConfigParser
-
+import psutil
 from modules.google import Google
 from modules.youtube import YoutubeMp3
 # from modules.musicmatch import MusicMatch
@@ -21,9 +21,21 @@ def record_wav():
     sd.wait()  # Wait until recording is finished
     write(WAV_OUTPUT, FS, wav_record)  # Save as WAV file 
 
+def is_ncmpcpp_running():
+    """Check if ncmpcpp is running."""
+    for proc in psutil.process_iter(attrs=['pid', 'name']):
+        if proc.info['name'] == 'ncmpcpp':
+            return True
+    return False
+
 
 if __name__ == "__main__":
     while True:
+        if is_ncmpcpp_running():
+            print("ncmpcpp is running. Skipping recording...")
+            time.sleep(3)  # Sleep for a while before checking again
+            continue
+
         record_wav()
         g = Google()
         g.recognize_song()
@@ -35,5 +47,5 @@ if __name__ == "__main__":
             if g.lyrics:
                 g.save_lyrics()
                 y.add_lyrics(g.lyrics)
-#        time.sleep(3)
-
+        # Sleep for a while before the next iteration
+        time.sleep(3)
