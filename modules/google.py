@@ -71,6 +71,9 @@ class Google():
     def save_lyrics(self):
         create_folder(self.save_lyrics_dirs)
         filename = f'{self.song_title.strip()}.txt'
+        fx = open(f"currentLyric.txt", "w")
+        fx.write(f"{self.lyrics}")
+        fx.close()
         if not os.path.exists(f"{self.save_lyrics_dirs}/{filename}"):
             f = open(f"{self.save_lyrics_dirs}/{filename}", "w")
             f.write(f"{self.lyrics}")
